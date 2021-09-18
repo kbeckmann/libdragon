@@ -63,7 +63,7 @@ extern "C" {
 
 void rdp_init( void );
 void rdp_attach_display( display_context_t disp );
-void rdp_attach_buffer( void *buffer );
+void rdp_attach_buffer( void *buffer, uint32_t width );
 void rdp_detach_display( void );
 void rdp_sync( sync_t sync );
 void rdp_set_clipping( uint32_t tx, uint32_t ty, uint32_t bx, uint32_t by );

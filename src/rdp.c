@@ -318,12 +318,12 @@ void rdp_attach_display( display_context_t disp )
  * @param[in] buffer
  *            A display context as returned by #display_lock
  */
-void rdp_attach_buffer( void *buffer )
+void rdp_attach_buffer( void *buffer, uint32_t width )
 {
     if( buffer == 0 ) { return; }
 
     /* Set the rasterization buffer */
-    __rdp_ringbuffer_queue( 0xFF000000 | ((__bitdepth == 2) ? 0x00100000 : 0x00180000) | (__width - 1) );
+    __rdp_ringbuffer_queue( 0xFF000000 | ((__bitdepth == 2) ? 0x00100000 : 0x00180000) | (width - 1) );
     __rdp_ringbuffer_queue( (uint32_t)buffer );
     __rdp_ringbuffer_send();
 }
