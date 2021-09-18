@@ -309,6 +309,26 @@ void rdp_attach_display( display_context_t disp )
 }
 
 /**
+ * @brief Attach the RDP to an off-screen buffer
+ *
+ * This function allows the RDP to operate on a user provided off-screen buffer.
+ * This should be performed before any other operations to ensure that the RDP has a valid
+ * output buffer to operate on.
+ *
+ * @param[in] buffer
+ *            A display context as returned by #display_lock
+ */
+void rdp_attach_buffer( void *buffer )
+{
+    if( buffer == 0 ) { return; }
+
+    /* Set the rasterization buffer */
+    __rdp_ringbuffer_queue( 0xFF000000 | ((__bitdepth == 2) ? 0x00100000 : 0x00180000) | (__width - 1) );
+    __rdp_ringbuffer_queue( (uint32_t)buffer );
+    __rdp_ringbuffer_send();
+}
+
+/**
  * @brief Detach the RDP from a display context
  *
  * @note This function requires interrupts to be enabled to operate properly.
